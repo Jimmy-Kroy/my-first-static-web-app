@@ -1,17 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+  <title>Example:Display json Data to HTML Table</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+  <style>
+  /* CSS styles for the page */
+a:link, a:visited {
+  color: white;
+}
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px double #ddd;
+  }
+
+  th, td {
+    padding: 10px 15px;
+    text-align: left;
+    color: #fff; /* Set the text color for table cells */
+    border: 2px double #ddd;
+    background-color: #454b4e; /* Set your desired color here */
+    font-size: 24px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: #333; /* Set the text color for table headers */
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  </style>
 </head>
-
 <body>
-  <main>
-    <h1>Deals of the day!</h1>
-  </main>
-</body>
+  <h1 id="heading">Deals of today!</h1>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <!-- JavaScript code using jQuery -->
+  <script>
 
+        async function getData(url) {
+            var response = await fetch(url, {
+                method: 'GET',
+                mode: "cors",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-requested-with': 'XMLHttpRequest',
+                },
+            });
+            const json = await response.json();
+            console.log(json);
+
+
+
+json.forEach((repo) => {
+
+var newRow=document.getElementById('data-table').insertRow();
+newRow.innerHTML += `<td>${repo.description}</td><td>$${repo.price}</td><td><a href=${repo.link} target="_blank">Visit</a></td>`;
+console.log(`${repo.description},${repo.price}, ${repo.link}`);
+});
+
+var today = new Date();
+var todayString = moment(today).format('DD-MM-YYYY');
+var heading = document.getElementById("heading").innerHTML = `Deals for ${todayString}:`
+        }
+
+ getData('https://dealsoftheday.azurewebsites.net/api/Function1?');
+  </script>
+</body>
 </html>
