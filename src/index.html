@@ -21,7 +21,8 @@
   </table>
   <!-- JavaScript code using jQuery -->
   <script>
-
+      console.log('process.env', process.env);
+    
         async function getData(url) {
             var response = await fetch(url, {
                 method: 'GET',
