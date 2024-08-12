@@ -21,7 +21,6 @@
   </table>
   <!-- JavaScript code using jQuery -->
   <script>
-      console.log('process.env', process.env);
     
         async function getData(url) {
             var response = await fetch(url, {
@@ -49,7 +48,7 @@ var todayString = moment(today).format('DD-MM-YYYY');
 var heading = document.getElementById("heading").innerHTML = `Deals for ${todayString}:`
         }
 
- getData('https://mydealfinder.azurewebsites.net/api/GetDealsOfTheDay?code=' + process.env.FUNCTION_KEY);
+ getData('https://mydealfinder.azurewebsites.net/api/GetDealsOfTheDay');
   </script>
 </body>
 </html>
